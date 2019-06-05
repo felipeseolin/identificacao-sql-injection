@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Identificação de SQL Injection</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/css/styles.css">
+</head>
+
+<body>
+    <section id="home" class="container">
+        <h1>Identificação de SQL Injection</h1>
+
+        <form action="">
+            <div class="form-group">
+                <label for="input-website">URL do Site:</label>
+                <input id="input-website" class="form-control" name="input-website" type="text"
+                    placeholder="https://google.com">
+            </div>
+            <button id="main-btn" class="btn btn-primary" type="button">Testar</button>
+        </form>
+    </section>
+
+    <section id="resultado" class="container">
+        <h2>Resultados Encontrados</h2>
+        <div id="error" class="alert alert-danger" role="alert"">
+            Ocorreu um erro, não foi possível testar para este website.
+        </div>
+        <div id="success" class="alert alert-success" role="alert">
+            This is a danger alert—check it out!
+        </div>
+    </section>
+
+    <!-- Jquery -->
+    <!-- <script src="./node_modules/jquery/dist/jquery.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- My Scripts -->
+    <script src="./src/js/index.js"></script>
+</body>
+
+</html>
