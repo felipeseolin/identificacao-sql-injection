@@ -11,7 +11,8 @@ $result = pg_query($bdcon, $query);
 if (pg_fetch_assoc($result)) {
     print 'DEU CERTO';
 } else {
-    print 'NÃO';
+    include 'index.html';
+    print 'SENHA INCORRETA';
 }
 
 die();

