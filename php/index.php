@@ -2,7 +2,7 @@
     include_once('./simple_html_dom.php');
 
     // URL to GET
-    $url = 'http://localhost/novo';
+    $url = 'http://localhost/teste';
     // DOM a partir da URL
     $html = file_get_html($url);
 
@@ -28,7 +28,7 @@
     }
 
     // Identifica se tem erro ou não
-    if (strpos($response, 'success')) {
+    if (strpos($response, 'CERTO')) {
         echo 'Possivelmente há um erro de SQL Injection em: ' . $url;
     } else {
         echo 'Não foram encontrados erros de SQL Injection no website: ' . $url;
@@ -41,7 +41,7 @@
 
         $data = array();
         foreach($inputs as $input) {
-            $data[$input->name] = "' OR '1'='1";
+            $data[$input->name] = "a";
         }
         
         if (strpos($url, 'http')) {
@@ -62,7 +62,7 @@
     function getRequest() {
         global $url, $forms, $inputs;
 
-        $sqlStr = "' OR '1'='1";
+        $sqlStr = "a";
 
         foreach($inputs as $input) {
             echo $input->name;
